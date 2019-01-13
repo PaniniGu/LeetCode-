@@ -1,0 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        int flag=0; //标记位，用于判断是否出现斜树
+        if(root == NULL)
+            return 0;
+        
+        if((flag==0 && root->left==NULL) || (flag==0 && root->right==NULL))
+            flag=1;
+        
+        int i=minDepth(root->left)+1;
+        int j=minDepth(root->right)+1;
+        
+        if(flag==0){
+        if(i<=j)
+            return i;
+        else
+            return j;}
+        else{  //出现斜树，应该取大的值
+            if(i<=j)
+            return j;
+        else
+            return i;
+        }
+        
+    }
+};

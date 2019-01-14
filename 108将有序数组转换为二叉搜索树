@@ -1,0 +1,28 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedArrayToBST(vector<int>& nums) {
+        if(!nums.size())
+            return NULL;
+        TreeNode *tmp = new TreeNode(nums[nums.size()/2]);
+        
+        //C++不能整个数组或者容器赋值，只能做个循环，so stupid
+        vector<int> nums1(nums), nums2;
+        for(int i=nums.size()/2; i<nums.size(); i++){
+            nums1.pop_back();
+            if(i!=nums.size()/2)
+                nums2.push_back(nums[i]);
+        }
+        tmp->left = sortedArrayToBST(nums1);
+        tmp->right = sortedArrayToBST(nums2);    
+        return tmp;
+    }
+};

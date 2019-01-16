@@ -1,0 +1,26 @@
+//动态规划，O(n^2)
+
+class Solution {
+public:    
+    string longestPalindrome(string s) {
+        int sl(s.length()), mlen(1), start(0);
+	    vector<vector<bool>> dpm(sl, vector<bool>(sl, false));
+	    for (int k1(0); k1 < sl; ++k1) dpm[k1][k1] = true;
+	    for (int k1(0); k1 < sl - 1; ++k1) {
+		    if (s[k1] == s[k1 + 1]) {
+                dpm[k1][k1 + 1] = true;
+                if (!start) start = k1, mlen = 2;
+            }
+        }
+        for (int kn(3); kn <= sl; ++kn) {
+            for (int k1(0); k1 <= sl - kn; ++k1) {
+                if (dpm[k1 + 1][k1 + kn - 2] && s[k1] == s[k1 + kn - 1]) {
+                    dpm[k1][k1 + kn - 1] = true;
+                    mlen = kn;
+                    start = k1;
+                }
+            }
+        }
+	    return s.substr(start, mlen);
+    }
+};

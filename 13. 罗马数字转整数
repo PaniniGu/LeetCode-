@@ -1,0 +1,63 @@
+//最蠢的暴力方法
+class Solution {
+public:
+    int map(char aa){
+        if(aa == 'I')
+            return 1;
+        if(aa == 'V')
+            return 5;
+        if(aa == 'X')
+            return 10;
+        if(aa == 'L')
+            return 50;
+        if(aa == 'C')
+            return 100;
+        if(aa == 'D')
+            return 500;
+        if(aa == 'M')
+            return 1000;
+        else{
+            cout<<'invalid input';
+            return 0;
+        }
+    }
+    
+    int romanToInt(string s) {
+        int lens = s.length();
+        int result = 0;
+        
+        if(lens == 1)
+            return map(s[0]);
+        else{
+            for(int i = 0; i < lens; i++){
+                if(s[i] == 'I' && s[i+1] == 'V'){
+                    result += 4;
+                    i++;
+                }
+                else if(s[i] == 'I' && s[i+1] == 'X'){
+                    result += 9;
+                    i++;
+                }
+                else if(s[i] == 'X' && s[i+1] == 'L'){
+                    result += 40;
+                    i++;
+                }
+                else if(s[i] == 'X' && s[i+1] == 'C'){
+                    result += 90;
+                    i++;
+                }
+                else if(s[i] == 'C' && s[i+1] == 'D'){
+                    result += 400;
+                    i++;
+                }
+                else if(s[i] == 'C' && s[i+1] == 'M'){
+                    result += 900;
+                    i++;
+                }
+                else
+                    result += map(s[i]);
+            }
+            return result;
+        }
+    }
+};

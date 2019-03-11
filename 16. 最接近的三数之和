@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        
+        if(nums.empty()) return 0;
+        
+        int len = nums.size();
+        int result=0;
+        if(len < 3)
+            return 0;
+        else
+            result = nums[0] + nums[1] + nums[2];   //初始化一个值
+        
+        sort(nums.begin(), nums.end());
+        for(int i = 0; i < len - 2; i++){          
+            //转化为两数之和最接近sum的值
+            for(int j = i + 1, k = len -1; j < k;){
+                int sum = nums[i] + nums[j] + nums[k];
+                if(abs(sum - target) < abs(result - target))
+                    result = sum;
+                if(sum > target)
+                    k--;
+                else if(sum < target)
+                    j++;
+                else
+                    return sum;
+            }
+        }
+        return result;
+    }
+};

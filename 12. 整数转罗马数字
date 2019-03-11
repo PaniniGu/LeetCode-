@@ -1,0 +1,82 @@
+//最蠢的方法
+class Solution {
+public:
+    string intToRoman(int num) {
+        map<int, char> int2string = {{1, 'I'}, {5, 'V'}, {10, 'X'}, {50, 'L'}, {100, 'C'}, {500, 'D'}, {1000, 'M'}};
+        string result;
+        int temp = num;
+        while(temp >= 1000){
+            result += 'M';
+            temp = temp - 1000 ;
+        }
+        while(temp >= 900 && temp < 1000 ){
+            result += "CM";
+            temp -= 900;
+        }
+        while(temp >= 500){
+            result += 'D';
+            temp -= 500;
+        }
+        while(temp >= 400 && temp < 900){
+            result += "CD";
+            temp -= 400;
+        }
+        while(temp >= 100){
+            result += 'C';
+            temp -= 100;
+        }
+        while(temp >= 90 && temp < 100){
+            result += "XC";
+            temp -= 90;
+        }
+        while(temp >= 50){
+            result += 'L';
+            temp -= 50;
+        }
+        while(temp >= 40 && temp < 50){
+            result += "XL";
+            temp -= 40;
+        }
+        while(temp >= 10){
+            result += 'X';
+            temp -= 10;
+        }
+        while(temp >= 9){
+            result += "IX";
+            temp -= 9;
+        }
+        while(temp >= 5){
+            result += 'V';
+            temp -= 5;
+        }
+        while(temp >= 4){
+            result += "IV";
+            temp -= 4;
+        }
+        while(temp >= 1){
+            result += 'I';
+            temp -= 1;
+        }
+
+        return result;
+        
+    }
+};
+
+//机智一些的方法
+class Solution {
+public:
+    string intToRoman(int num) {
+    string roman="";
+    int number[13]={1000,900,500,400,100,90,50,40,10,9,5,4,1};//特殊数字和普通转换的数值
+    string num_roman[13]={"M","CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};//上面分别对应的罗马数
+    int i=0;
+    for(i;i<13;i++){//循环number
+        while(num>=number[i]){//查找数值
+            num-=number[i]; //减去比num接近较小的数，1000
+            roman+=num_roman[i];//对应获取i个罗马数字
+        }
+    }
+        return roman;
+    }
+};

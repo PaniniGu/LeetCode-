@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        //判断输入为空
+        if(nums.empty())
+            return {};
+        
+        vector<vector<int> > ans;
+        vector<int> temp(4);
+        sort(nums.begin(), nums.end()); //排序
+        int len = nums.size();
+        int sum1 = 0;
+        for(int i = 0; i < len - 3; i++){
+            sum1 = target - nums[i];
+            temp[0] = nums[i];   //存储在临时容器
+            int sum2 = 0;
+            for(int j = i + 1; j < len - 2; j++){  //化为求三数之和
+                sum2 = sum1 - nums[j];
+                temp[1] = nums[j];  //存储在临时容器中
+                for(int k = j + 1, m = len - 1; k < m; ){  //化为求两数之和
+                    if(nums[k] + nums[m] == sum2){
+                        temp[2] = nums[k++];
+                        temp[3] = nums[m--];
+                        ans.push_back(temp);
+                        
+                        while(k < m && nums[k] == nums[k-1])
+                            k++;
+                        while(k < m && nums[m] == nums[m+1])
+                            m--;
+                    }
+                    else if(nums[k] + nums[m] < sum2)
+                        k++;
+                    else
+                        m--;
+                }
+                while(j < len - 2 && nums[j] == nums[j+1])
+                    j++;
+            }
+            while(i < len - 3 && nums[i] == nums[i+1])
+                i++;
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,48 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        //判断输入空指针
+        if(head == NULL)
+            return NULL;
+        
+        ListNode* ans = head;
+        
+        //先求链表的节点总数
+        int count = 1;
+        while(head->next != NULL){
+            count += 1;
+            head = head->next;
+        }
+        
+        //判断n与链表节点数的大小
+        if(n > count){
+            cout<<"n大于链表节点数";
+            return NULL;
+        }
+        else{
+            ListNode* re = ans;
+            int temp = 0;
+            int index = count - n;  //记录待删除节点的索引序号
+            if(index == 0){
+                ans = ans->next;  //删除头结点
+                return ans;
+            }
+            else{
+                while(temp < index - 1){  //找到待删除节点的上一个节点
+                    re = re->next;
+                    temp += 1;
+                }
+                re->next = re->next->next;
+                return ans;
+            }
+        }
+    }
+};

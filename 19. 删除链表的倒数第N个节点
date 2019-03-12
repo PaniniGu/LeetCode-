@@ -1,3 +1,5 @@
+//最蠢的方法
+
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -46,3 +48,49 @@ public:
         }
     }
 };
+
+
+
+//用两个指针
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        //判断输入空指针
+        if(head == NULL)
+            return NULL;
+        
+        ListNode* first = head;
+        ListNode* second = head;
+        
+        if(first->next == NULL){ //如果只有一个节点
+            return NULL;
+        }
+
+        //先让第一个指针走n步
+        while(n > 0){
+            first = first->next;
+            n--;
+        }
+        if(first == NULL){   //判断是否要删除头结点
+            return head->next;
+        }
+        else{
+        //两个指针一起往前走，直至first到达尾部       
+            while(first->next != NULL){
+                first = first->next;
+                second = second->next;
+            }
+            second->next = second->next->next;
+            return head;
+        }
+    }
+};
+         

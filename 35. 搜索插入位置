@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        //二分查找
+        int ans;
+        int left = 0;
+        int right = nums.size()-1;
+        int mid;
+        if(nums[left] == target)
+            return left;
+        else if(nums[left] > target)
+            return 0;
+        else if(nums[right] == target)
+            return right;
+        else if(nums[right] < target)
+            return right+1;
+        else{
+            while(nums[left] < target && nums[right]>target && left < right){
+                mid = (left + right)/2;
+                if(mid==left || mid==right)
+                    break;
+                if(nums[mid] == target)
+                    return mid;
+                else if(nums[mid] > target)
+                    right = mid;
+                else
+                    left = mid;
+            }
+            return left+1;
+        }
+    }
+};

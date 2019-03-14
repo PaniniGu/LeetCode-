@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        //输入为空
+        if(nums.empty())
+            return -1;
+        
+        //只有一个输入
+        if(nums.size() == 1){
+            if(nums[0] == target)
+                return 0;
+            else
+                return -1;
+        }
+            
+        //二分查找
+        int left = 0;
+        int right = nums.size()-1;
+        int mid;
+        while(left < right){
+            if(nums[left] == target)
+                return left;
+            else if(nums[right] == target)
+                return right;
+            else{
+                mid = (left + right) / 2;
+                if(nums[mid] == target)
+                    return mid;
+                else{
+                //判断mid对应的值
+                    if(nums[mid] > nums[left] && nums[mid] < nums[right]){  //这个数组完全是升序的
+                        if(target > nums[right] || target < nums[left])
+                            return -1;
+                        if(nums[mid] > target)
+                            right = mid;
+                        else
+                            left = mid;
+                    }
+                    else if(nums[mid] > nums[left] && nums[mid] > nums[right]){  //mid在左侧的升序中    
+                        if(nums[mid]>target && nums[left]<target)
+                            right = mid;
+                        else
+                            left = mid;
+                    }
+                    else{                        //mid在右侧的升序中
+                        if(nums[mid] > target || nums[left] < target)
+                            right = mid;
+                        else 
+                            left = mid;
+                    }
+                }
+            }
+            if(left+1 == right || left==right)
+                return -1;
+        }
+        return -1;
+    }
+};

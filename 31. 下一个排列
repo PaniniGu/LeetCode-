@@ -1,0 +1,19 @@
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        //从末尾开始找最近的一个顺序对，交换一下即是，若没有找到，则本身就是最大的排列
+        int len = nums.size();
+        for(int i=len-1; i>=0; i--){
+            for(int j=len-1; j>i; j--){
+                if(nums[i] < nums[j]){   //找到第一对顺序对,交换这两个数字，然后对后面的树排序，return结束
+                    int temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                    sort(nums.begin()+i+1, nums.end());
+                    return ;
+                }
+            }
+        }
+        reverse(nums.begin(), nums.end());  //是最大排列
+    }
+};

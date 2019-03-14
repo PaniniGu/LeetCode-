@@ -1,0 +1,64 @@
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> ans(2);
+        
+        //判断输入为空
+        if(nums.empty()){
+            ans[0]=ans[1] = -1;
+            return ans;
+        }
+        int len = nums.size();
+        //如果只有一个数
+        if(len == 1){
+            if(nums[0] == target){
+                ans[0]=ans[1] = 0;
+                return ans;
+            }
+            else{
+                ans[0]=ans[1] = -1;
+                return ans;
+            }
+        }
+        
+        //二分查找
+        int left = 0;
+        int right = len-1;
+        int index = 0; //记录找到的target的位置
+        while(left < right){
+            int mid = (left+right)/2;
+            
+            if(nums[left] == target){
+                index = left;
+                break;
+            }
+            if(nums[right] == target){
+                index = right;
+                break;
+            }
+            if(nums[mid] == target){
+                index = mid;
+                break;
+            }
+            if(nums[mid] > target)
+                right = mid;
+            else
+                left = mid;
+            
+            if(index==0 && left+1==right || index==0 && left==right){
+                ans[0]=ans[1] = -1;
+                return ans;
+            }
+        }
+        
+        int index2 = index;
+        ans[0]=ans[1] = index;
+        //根据index的值，探索附近相等的值
+        while(index > 1 && nums[--index] == target){
+            ans[0] = index;
+        }
+        while(index2 < len-1 && nums[++index2] == target)
+            ans[1] = index2;    
+        return ans;
+    }
+};

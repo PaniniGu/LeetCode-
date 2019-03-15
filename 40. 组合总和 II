@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> v;
+    vector<int> n;
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {  
+        n=candidates;
+        sort(n.begin(),n.end());
+        vector<int> t;
+        dfs(0,target,t);
+        return v;
+    }
+    void dfs(int index,int target,vector<int> t){
+        if(target==0) {v.push_back(t); return;}
+        if(index==n.size()||target<0) return;
+        for(int i=index;i<n.size();++i){
+            if(i>index&&n[i]==n[i-1]) continue; //去重 与39题不同
+            t.push_back(n[i]);
+            dfs(i+1,target-n[i],t);
+            t.pop_back();
+        }
+    }
+};

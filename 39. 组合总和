@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        //判断输入为空
+        if(candidates.empty())
+            return {};
+        
+        vector<vector<int> > ans;
+        vector<int> cur;
+        dfs(candidates, target, ans, cur, 0, 0);
+        return ans;
+    }
+    
+    void dfs(vector<int>& candidates, int target, vector<vector<int> >& ans, vector<int>& cur, int sum, int begin){    //输入参数begin用来防止出现重复的组合
+        if(sum == target){
+            ans.push_back(cur);
+            return;
+        }
+        if(sum > target)
+            return;
+        for(int i = begin; i<candidates.size(); ++i){
+            sum += candidates[i];
+            cur.push_back(candidates[i]);
+            dfs(candidates, target, ans, cur, sum, i);
+            sum -= candidates[i];
+            cur.pop_back();
+        }
+        
+    }
+};

@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > ans;
+        
+        if(nums.empty())
+            return {{}};
+        if(nums.size() == 1)
+            return {{nums[0]}};
+        else{
+            int len = nums.size();
+            for(int i = 0; i < len; i++){
+                vector<vector<int> > tmp1;
+                vector<int> tmp2;
+                tmp2 = nums;
+                tmp2.erase(tmp2.begin() + i);
+                tmp1 = permute(tmp2);
+                int len_tmp = tmp1.size();
+                for(int j = 0; j < len_tmp; j++){
+                    tmp1[j].insert(tmp1[j].begin(), nums[i]);
+                }
+                ans.insert(ans.end(), tmp1.begin(), tmp1.end());
+            }
+        }
+        return ans;
+        
+    }
+};

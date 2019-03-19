@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        int n1 = num1.length();
+        int n2 = num2.length();
+        
+        string ans;
+        vector<int> tmp(n1+n2, 0);
+        for(int i=n1-1; i>=0; i--){
+            for(int j=n2-1; j>=0; j--){
+                tmp[i+j+1] += (num1[i]-'0') * (num2[j] - '0');
+            }
+        }
+        //处理进位
+        for(int i=n1+n2-1; i>0; i--){
+            if(tmp[i] >= 10){
+                tmp[i-1] = tmp[i-1] + tmp[i] / 10;
+                tmp[i] = tmp[i] % 10;
+            }
+        }
+        //求最后的结果
+        int i = 0;
+        while(i < n1+n2 && tmp[i]==0) i++;
+        if(i == n1+n2) return "0";
+        while(i < n1+n2)
+            ans.push_back(tmp[i++] + '0');
+        
+        return ans;
+    }
+};

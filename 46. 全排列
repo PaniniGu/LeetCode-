@@ -1,3 +1,4 @@
+//方法一：递归，暴力解答
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
@@ -24,5 +25,41 @@ public:
         }
         return ans;
         
+    }
+};
+
+
+
+//方法二：DFS
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int> > ans;
+        if(nums.empty())
+            return {{}};
+        if(nums.size() == 1)
+            return {{nums[0]}};
+        else{
+            vector<int> tmp(nums.size(), 0);
+            vector<int> cur;
+            dfs(ans, nums, tmp, cur);
+            }
+        return ans;
+        }
+     
+    void dfs(vector<vector<int> >& ans, vector<int>& nums, vector<int>& tmp, vector<int>& cur){
+        if(cur.size() == nums.size()){
+            ans.push_back(cur);
+            return;
+        }
+        for(int j = 0; j < nums.size(); j++){
+            if(tmp[j] == 0){
+                cur.push_back(nums[j]);
+                tmp[j] = 1;
+                dfs(ans, nums, tmp, cur);
+                cur.pop_back();
+                tmp[j] = 0;
+            }
+        }   
     }
 };

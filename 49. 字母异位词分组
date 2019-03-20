@@ -1,0 +1,18 @@
+
+//使用了unordered_map来存储每一种字母组合的异构字符串
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string> > res;
+        unordered_map<string, vector<string> > m;
+        for(string s : strs){
+            string tmp = s;
+            sort(tmp.begin(), tmp.end());
+            m[tmp].push_back(s);
+        }
+        for(auto a : m){
+            res.push_back(a.second);
+        }
+        return res;
+    }
+};

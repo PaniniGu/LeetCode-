@@ -1,0 +1,43 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+class Solution {
+public:
+    static bool cmp(Interval a, Interval b){
+        return a.start < b.start;
+    }
+    
+    vector<Interval> merge(vector<Interval>& intervals) {
+        if(intervals.size() <= 1)  //输入为空，或只有一个元素
+            return intervals;
+        vector<Interval> res;
+        sort(intervals.begin(), intervals.end(), cmp);   //按照start的大小进行升序排序
+        int i = 0;
+        Interval temp = {intervals[0].start, intervals[0].end};
+        while(i < intervals.size())
+        {
+            temp.start = intervals[i].start;
+            temp.end = intervals[i].end;
+            while(i < intervals.size()){
+                if(i < intervals.size() - 1 && temp.end >= intervals[i + 1].start){
+                    if(temp.end < intervals[i + 1].end)
+                        temp.end = intervals[i + 1].end;
+                    i++;
+                }
+                else{
+                    i++;
+                    break;
+                }
+            }
+            res.push_back(temp);
+            }
+        return res;
+        }
+    
+};

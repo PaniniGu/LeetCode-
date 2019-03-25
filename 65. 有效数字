@@ -1,0 +1,45 @@
+class Solution {
+private:
+    bool isSpace(char c){return c==' ';}
+    bool isSgn(char c){return c=='+' || c=='-';}
+    bool isDot(char c){return c=='.';}
+    bool isNum(char c){return c<='9' && c>='0';}
+    bool isE(char c){return c=='e' || c=='E';}
+    
+public:
+    bool isNumber(string s) {
+        int pos=0;
+        bool haveNum = false;
+        
+        //check all the prefix spaces
+        while( pos < s.size() && isSpace(s[pos])) pos++;
+        
+        //check the next char if it is a +/- signal
+        if( pos < s.size() && isSgn(s[pos])) pos++;
+        
+        //check the numbers before a dot '.'
+        while(pos < s.size() && isNum(s[pos])) {haveNum = true; pos++;}
+        
+        //check the dot '.'
+        if(pos < s.size() && isDot(s[pos])) pos++;
+        
+        //check the number after a dot '.'
+        while(pos < s.size() && isNum(s[pos])){haveNum = true; pos++;}
+        
+        //check the 'e' / 'E'
+        if(haveNum && pos < s.size() && isE(s[pos])){
+            haveNum = false; pos++;
+            if(pos < s.size() && isSgn(s[pos])) pos++;
+        }
+        
+        //check the number after 'e' / 'E'
+        while(pos < s.size() && isNum(s[pos])) {haveNum = true; pos++;}
+        
+        //check all the remaining spaces
+        while(pos < s.size() && isSpace(s[pos])) pos++;
+        
+        //everything is done, if the string not empty, return false
+        return (pos==s.size() && haveNum);
+        
+    }
+};

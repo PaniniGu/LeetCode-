@@ -1,0 +1,36 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        if(path.empty()) return NULL;
+        
+        stack<string> s;
+        int len = path.length();
+        int i = 0, j = 0;
+        while(i < len - 1){
+            j = i + 1;
+            while(j < len && path[j] != '/') ++j;  //找到下一个'/'的位置
+            if(j == i + 1){  //如果是相邻的
+                i = j;
+                continue;
+            }
+            //下面判断'/'与'/'中间的字符串
+            string tmp = path.substr(i, j-i);
+            if(tmp == "/.") ;
+            else if(tmp == "/.."){
+                if(!s.empty()) s.pop();
+                else ;
+            }
+            else s.push(tmp);
+            i = j;
+        }
+        if(s.empty()) return "/";
+        else{
+            string res;
+            while(!s.empty()){
+                res = s.top() + res;
+                s.pop();
+            }
+            return res;
+        }
+    }
+};

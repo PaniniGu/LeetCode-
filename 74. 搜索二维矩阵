@@ -1,0 +1,43 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        //判断输入为空
+        if(matrix.empty() || matrix[0].empty()) return false;
+        
+        int m = matrix.size();
+        int n = matrix[0].size();
+        
+        //输入只有一个值时
+        if(m == 1 && n==1){
+            if(target == matrix[0][0]) return true;
+            else return false;
+        }
+        
+        //先对每一行做二分查找
+        int left = 0, right = m - 1;
+        if(matrix[0][0] == target) return true;
+        if(matrix[m - 1][0] == target) return true;
+        while(left < right - 1){
+            int mid = (left + right) / 2;
+            if(matrix[mid][0] == target) return true;
+            else if(matrix[mid][0] < target) left = mid;
+            else right = mid;
+        }
+        
+        //target值就在left那一行，对列进行二分查找
+
+        int row = left;
+        if(matrix[right][0] < target) row = right;
+        // cout<< row <<' ';
+        left = 0, right = n - 1;
+        if(matrix[row][0] == target) return true;
+        if(matrix[row][n - 1] == target) return true;
+        while(left < right - 1){
+            int mid = (left + right) / 2;
+            if(matrix[row][mid] == target) return true;
+            else if(matrix[row][mid] < target) left = mid;
+            else right = mid;
+        }
+        return false;
+    }
+};

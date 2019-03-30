@@ -1,0 +1,26 @@
+//方法一：DFS
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        //DFS
+        vector<vector<int> > res;
+        vector<int> cur;
+        dfs(res, cur, 0, n, k);
+        return res;
+    }
+    
+    void dfs(vector<vector<int> >& res, vector<int>& cur, int i, int n, int k){
+        if(cur.size() == k){
+            res.push_back(cur);
+            return;
+        }
+        for(int j = i; j < n; j++){
+            cur.push_back(j+1);
+            dfs(res, cur, j+1, n, k);
+            cur.pop_back();
+        }   
+    }
+};
+
+
+//方法二：

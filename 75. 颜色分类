@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        //使用两个数分别指向头和尾，相当于两个指针，分别指向0和2的存放位置
+        int n = nums.size();
+        if(n <= 1) return;
+        int left = 0, right = n - 1;
+        int i = left;
+        while(i <= right){
+            if(nums[i] == 0){
+                swap(nums[left], nums[i]);
+                left++;
+            }
+            else if(nums[i] == 2){
+                swap(nums[right], nums[i]);
+                right--;
+                i--;
+            }
+            i++;
+        }
+    }
+};

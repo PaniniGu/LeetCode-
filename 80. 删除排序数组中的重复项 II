@@ -1,0 +1,25 @@
+//思想：用两个指针
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        if(nums.empty()) return 0;
+        int i = 0, j = i + 1;
+        int tmp = 0;
+        while(j < nums.size()){
+            if(nums[i] == nums[j]){
+                if(tmp == 1){
+                    j++;
+                }
+                else{
+                    nums[++i] = nums[j++];
+                    tmp++;
+                }
+            }
+            else{
+                nums[++i] = nums[j++];
+                tmp = 0;
+            }
+        }
+        return i+1;
+    }
+};

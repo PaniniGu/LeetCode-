@@ -1,0 +1,53 @@
+class MinStack {
+public:
+    /** initialize your data structure here. */
+    vector<int> nums;
+    int min_index = 0;
+    MinStack() {
+        //nothing to do
+    }
+    
+    void push(int x) {
+        nums.push_back(x);
+        if(x < nums[min_index]){  //update the index
+            min_index = nums.size() - 1;
+        }
+    }
+    
+    void pop() {
+        if(nums.size() == 0) cout<<'Empty stack!';
+        else{
+            nums.pop_back();
+            if(min_index != nums.size()) ; //nothing to do
+            else{
+                int min = nums[0];
+                min_index = 0;
+                for(int i = 0; i < nums.size(); i++){
+                    if(nums[i] < min) {
+                        min_index = i;
+                        min = nums[i];
+                    }
+                }
+            }
+        }
+    }
+    
+    int top() {
+        if(nums.size() == 0) return -1;
+        else return nums.back();
+    }
+    
+    int getMin() {
+        if(nums.size() == 0) return -1;
+        else return nums[min_index];
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(x);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
